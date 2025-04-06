@@ -1,8 +1,13 @@
+import net.openhft.hashing.LongHashFunction;
 import java.io.File;
 import java.io.FileWriter;
 import java.util.Scanner;
 
+
 public class HashApp {
+    private static long hash(String input) {
+        return (long) LongHashFunction.xx().hashChars(input);
+    }
     public static void main(String[] args) {
         if (args.length != 2) {
             System.out.println("Usage: java HashApp <number of buckets> <bucket size>");
@@ -28,7 +33,7 @@ public class HashApp {
                 if (input.isEmpty()) {
                     continue; // Skip empty input
                 }
-                long hash = Math.abs(input.hashCode());
+                long hash = Math.abs(hash(input));
                 int bucketIndex = (int) (hash % n); // Bucket index (1 to n-1)
                 bucketIndex= bucketIndex==0 ? n : bucketIndex; // if bucket index is 0 replace with n
                 String bucketFileName = bucketIndex + ".txt";
